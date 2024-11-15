@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Function to count the number of files in the current directory
+function file_count {
+    ls -1 | wc -l
+}
+
+# Store the correct answer
+correct_count=$(file_count)
+
+# Loop until the user guesses the correct number
+while true; do
+    # Prompt the user for a guess
+    echo "Guess the number of files in the current directory:"
+    read user_guess
+
+    # Check if the guess is a valid number
+    if ! [[ "$user_guess" =~ ^[0-9]+$ ]]; then
+        echo "Please enter a valid number."
+        continue
+    fi
+
+    # Compare the guess to the actual file count
+    if [[ $user_guess -lt $correct_count ]]; then
+        echo "Too low!"
+    elif [[ $user_guess -gt $correct_count ]]; then
+        echo "Too high!"
+    else
+        echo "Congratulations! You guessed the correct number of files."
+        break
+    fi
+done
