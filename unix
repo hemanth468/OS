@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Function to count the number of files in the current directory
+file_count() {
+  # Count only regular files, excluding directories and hidden files
+  echo $(ls -1 | wc -l)
+}
+
+# Store the correct number of files
+correct_count=$(file_count)
+
+echo "Welcome to the guessing game!"
+echo "Try to guess the number of files in the current directory."
+
+# Loop until the user guesses correctly
+while true; do
+  # Ask the user for a guess
+  read -p "Enter your guess: " user_guess
+
+  # Check if the input is a number
+  if ! [[ "$user_guess" =~ ^[0-9]+$ ]]; then
+    echo "Please enter a valid number."
+    continue
+  fi
+
+  # Compare the guess with the correct count
+  if (( user_guess < correct_count )); then
+    echo "Too low! Try again."
+  elif (( user_guess > correct_count )); then
+    echo "Too high! Try again."
+  else
+    echo "Congratulations! You guessed it correctly!"
+    break
+  fi
+done
